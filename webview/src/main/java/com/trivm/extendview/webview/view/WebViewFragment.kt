@@ -10,7 +10,6 @@ import android.webkit.WebChromeClient
 import android.webkit.WebView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
-import androidx.databinding.ViewDataBinding
 import com.trivm.extendview.webview.R
 import com.trivm.extendview.webview.databinding.FragmentWebViewBinding
 import com.trivm.extendview.webview.model.WebViewModel
@@ -27,17 +26,17 @@ class WebViewFragment : Fragment() {
     ): View {
         activity?.hideKeyboard()
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_web_view, container, false)
-        binding.lifecycleOwner = this
+        binding.lifecycleOwner = viewLifecycleOwner
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        onViewReady(view, savedInstanceState)
+        onViewReady()
     }
 
     @SuppressLint("SetJavaScriptEnabled")
-    private fun onViewReady(view: View, savedInstanceState: Bundle?) {
+    private fun onViewReady() {
         binding.webView.webChromeClient = object : WebChromeClient() {
             override fun onReceivedTitle(view: WebView?, title: String?) {
                 super.onReceivedTitle(view, title)
@@ -47,7 +46,7 @@ class WebViewFragment : Fragment() {
             }
         }
         binding.webView.settings.javaScriptEnabled = true
-        setupView(savedInstanceState)
+        setupView(arguments)
     }
 
     private fun setupView(bundle: Bundle?) {
