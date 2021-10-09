@@ -2,6 +2,7 @@ plugins {
     id 'com.android.library'
     id 'kotlin-android'
     id 'kotlin-kapt'
+    id 'maven-publish'
 }
 
 android {
@@ -48,4 +49,17 @@ dependencies {
     implementation "androidx.fragment:fragment-ktx:1.3.6"
     implementation "androidx.browser:browser:1.3.0"
     implementation 'com.google.code.gson:gson:2.8.8'
+}
+
+afterEvaluate {
+    publishing {
+        publications {
+            release(MavenPublication) {
+                from components.release
+                groupId = "com.trivm.extendview"
+                artifactId = "webview"
+                version = '1.0.0-beta'
+            }
+        }
+    }
 }
